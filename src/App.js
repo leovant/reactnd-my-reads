@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { Layout, PageHeader } from 'antd';
+import Home from './screens/Home';
+import Search from './screens/Search';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+const { Header, Content } = Layout;
+
+function App() {
+  return (
+    <Layout>
+      <Header>
+        <PageHeader
+          title="Leo's reads"
+          subTitle="A list of Leovan Tavares' books"
+        />
+      </Header>
+      <Content>
+        <Route exact path="/" component={Home} />
+        <Route path="/search" component={Search} />
+      </Content>
+    </Layout>
+  );
 }
 
 export default App;
