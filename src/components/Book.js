@@ -31,7 +31,9 @@ function Book(props) {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${book.imageLinks.thumbnail})`
+              backgroundImage: book.imageLinks
+                ? `url(${book.imageLinks.thumbnail})`
+                : 'none'
             }}
           />
         </div>
