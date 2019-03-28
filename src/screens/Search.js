@@ -1,16 +1,33 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, Input, notification, Row, Typography } from 'antd';
+import { Button, Card, Input, notification, Row, Spin } from 'antd';
 import Book from '../components/Book';
 import * as BooksAPI from '../utils/BooksAPI';
 
-const { Title } = Typography;
-
 class Search extends Component {
   state = {
-    loading: true,
-    books: []
+    loading: false,
+    books: [],
+    myBooks: {
+      currentlyReading: [],
+      wantToRead: [],
+      read: []
+    }
   };
+
+  componentDidMount() {
+    const shelfs = {
+      currentlyReading: [],
+      wantToRead: [],
+      read: []
+    };
+
+    BooksAPI.getAll().then(myBooks => {
+      myBooks.forEach(book => {
+        shelfs[book.shelf].push(book.id);
+      });
+    });
+  }
 
   handleShelfChange = (book, shelf) => {
     BooksAPI.update(book, shelf).then(res => {
@@ -28,6 +45,8 @@ class Search extends Component {
 
   handleSearch = query => {
     if (query.length > 0) {
+      this.setState(() => ({ loading: true }));
+
       BooksAPI.search(query).then(books => {
         if (books.error) {
           notification.error({
@@ -35,15 +54,13 @@ class Search extends Component {
             message: 'No books found!'
           });
         }
-        this.setState(() => {
-          return { books, loading: false };
-        });
+        this.setState(() => ({ books, loading: false }));
       });
     }
   };
 
   render() {
-    const { books } = this.state;
+    const { books, loading } = this.state;
     return (
       <div>
         <Row style={{ margin: 10 }}>
@@ -63,7 +80,12 @@ class Search extends Component {
             />
           </div>
         </Row>
-        {books.length === 0 && (
+        {loading === true && (
+          <Row style={{ textAlign: 'center', margin: 50 }}>
+            <Spin size="large" tip="Searching..." />
+          </Row>
+        )}
+        {!loading && books.length === 0 && (
           <Row style={{ margin: 10 }}>
             <p>Type in the text field to search for books</p>
           </Row>

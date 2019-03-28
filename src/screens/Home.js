@@ -50,6 +50,7 @@ class Home extends Component {
           <Shelf
             title="Currently Reading"
             books={books.filter(book => book.shelf === 'currentlyReading')}
+            loading={loading}
             onShelfChange={this.handleShelfChange}
           />
         </Row>
@@ -57,6 +58,7 @@ class Home extends Component {
           <Shelf
             title="Want to Read"
             books={books.filter(book => book.shelf === 'wantToRead')}
+            loading={loading}
             onShelfChange={this.handleShelfChange}
           />
         </Row>
@@ -64,6 +66,7 @@ class Home extends Component {
           <Shelf
             title="Read"
             books={books.filter(book => book.shelf === 'read')}
+            loading={loading}
             onShelfChange={this.handleShelfChange}
           />
         </Row>

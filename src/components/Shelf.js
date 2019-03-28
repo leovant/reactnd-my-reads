@@ -1,21 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { Card, Row, Spin } from 'antd';
 import Book from './Book';
 
 function Shelf(props) {
+  const { title, loading, books, onShelfChange } = props;
+
   return (
-    <Card title={props.title} style={{ margin: 10 }}>
-      {props.books.length === 0 && <p>No books to display.</p>}
+    <Card title={title} style={{ margin: 10 }}>
+      {books.length === 0 && !loading && (
+        <p>No books to display in this shelf.</p>
+      )}
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {props.books.map(book => (
+        {books.map(book => (
           <Book
             book={book}
             key={book.id}
-            onShelfChange={shelf => props.onShelfChange(book, shelf)}
+            onShelfChange={shelf => onShelfChange(book, shelf)}
           />
         ))}
       </div>
+      {loading === true && (
+        <Row style={{ textAlign: 'center' }}>
+          <Spin />
+        </Row>
+      )}
     </Card>
   );
 }
