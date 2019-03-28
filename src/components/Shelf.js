@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Row, Spin } from 'antd';
 import Book from './Book';
+import Loader from './Loader';
 
 function Shelf(props) {
   const { title, loading, books, onShelfChange } = props;
@@ -20,11 +21,7 @@ function Shelf(props) {
           />
         ))}
       </div>
-      {loading === true && (
-        <Row style={{ textAlign: 'center' }}>
-          <Spin />
-        </Row>
-      )}
+      {loading === true && <Loader />}
     </Card>
   );
 }

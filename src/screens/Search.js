@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Input, notification, Row, Spin } from 'antd';
 import Book from '../components/Book';
+import Loader from '../components/Loader';
 import * as BooksAPI from '../utils/BooksAPI';
 
 class Search extends Component {
@@ -80,11 +81,7 @@ class Search extends Component {
             />
           </div>
         </Row>
-        {loading === true && (
-          <Row style={{ textAlign: 'center', margin: 50 }}>
-            <Spin size="large" tip="Searching..." />
-          </Row>
-        )}
+        {loading === true && <Loader />}
         {!loading && books.length === 0 && (
           <Row style={{ margin: 10 }}>
             <p>Type in the text field to search for books</p>
