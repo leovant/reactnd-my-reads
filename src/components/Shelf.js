@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Row, Spin } from 'antd';
+import { Card } from 'antd';
 import Book from './Book';
 import Loader from './Loader';
 
